@@ -1,5 +1,5 @@
 # require 'spec_helper'
-require "#{File.join(File.dirname(__FILE__),'..','spec_helper.rb')}"
+require "#{File.join(File.dirname(__FILE__),'../../','spec_helper.rb')}"
 
 describe 'redis' do
 
@@ -10,22 +10,22 @@ describe 'redis' do
   } }
 
   describe 'Test default settings  ' do
-    it 'should install redis package' do should contain_package('redis-server').with_ensure('present') end
-    it 'should run redis service' do should contain_service('sshd').with_ensure('running') end
-    it 'should enable redis service at boot' do should contain_service('sshd').with_enable('true') end
+    it 'should install redis package' do should contain_package('redis').with_ensure('present') end
+    it 'should run redis service' do should contain_service('redis').with_ensure('running') end
+    it 'should enable redis service at boot' do should contain_service('redis').with_enable('true') end
     it 'should manage config file presence' do should contain_file('redis.conf').with_ensure('present') end
   end
 
   describe 'Test installation of a specific version' do
     let(:params) { {:version => '1.0.42' } }
-    it { should contain_package('redis-server').with_ensure('1.0.42') }
+    it { should contain_package('redis').with_ensure('1.0.42') }
   end
 
   describe 'Test decommissioning' do
     let(:params) { {:ensure => 'absent'} }
-    it 'should remove Package[redis]' do should contain_package('redis-server').with_ensure('absent') end
-    it 'should stop Service[redis]' do should contain_service('sshd').with_ensure('stopped') end
-    it 'should not manage at boot Service[redis]' do should contain_service('sshd').with_enable(nil) end
+    it 'should remove Package[redis]' do should contain_package('redis').with_ensure('absent') end
+    it 'should stop Service[redis]' do should contain_service('redis').with_ensure('stopped') end
+    it 'should not manage at boot Service[redis]' do should contain_service('redis').with_enable(nil) end
     it 'should remove redis configuration file' do should contain_file('redis.conf').with_ensure('absent') end
   end
 
@@ -34,8 +34,8 @@ describe 'redis' do
       :service_ensure => 'stopped',
       :service_enable => false,
     } }
-    it 'should stop Service[redis]' do should contain_service('sshd').with_ensure('stopped') end
-    it 'should not enable at boot Service[redis]' do should contain_service('sshd').with_enable('false') end
+    it 'should stop Service[redis]' do should contain_service('redis').with_ensure('stopped') end
+    it 'should not enable at boot Service[redis]' do should contain_service('redis').with_enable('false') end
   end
 
   describe 'Test custom file via template' do
