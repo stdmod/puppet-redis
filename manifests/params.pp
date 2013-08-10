@@ -5,24 +5,22 @@
 class redis::params {
 
   $package = $::osfamily ? {
-    Suse    => 'redis',
-    OpenBSD => '',
-    default => 'redis-server',
+    Debian  => 'redis-server',
+    default => 'redis',
   }
 
   $service = $::osfamily ? {
-    Debian  => 'ssh',
-    default => 'sshd',
+    Debian  => 'redis-server',
+    default => 'redis',
   }
 
   $file = $::osfamily ? {
-    default => '/etc/ssh/sshd_config',
+    RedHat  => '/etc/redis.conf',
+    default => '/etc/redis/redis.conf',
   }
 
   $file_mode = $::osfamily ? {
-    Suse    => '0640',
-    OpenBSD => '0644',
-    default => '0600',
+    default => '0644',
   }
 
   $file_owner = $::osfamily ? {
@@ -34,7 +32,7 @@ class redis::params {
   }
 
   $dir = $::osfamily ? {
-    default => '/etc/ssh',
+    default => '/etc/redis',
   }
 
 }
