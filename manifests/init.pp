@@ -13,7 +13,6 @@ class redis (
 
   $ensure              = 'present',
   $version             = undef,
-  $audit               = undef,
 
   $package             = $redis::params::package,
 
@@ -119,7 +118,6 @@ class redis (
       group   => $redis::file_group,
       source  => $redis::file_source,
       content => $redis::managed_file_content,
-      audit   => $redis::audit,
       notify  => $redis::file_notify,
       require => $redis::file_require,
     }
@@ -133,7 +131,6 @@ class redis (
       recurse => $redis::dir_recurse,
       purge   => $redis::dir_purge,
       force   => $redis::dir_purge,
-      audit   => $redis::audit,
       notify  => $redis::file_notify,
       require => $redis::file_require,
     }
