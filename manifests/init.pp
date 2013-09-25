@@ -38,21 +38,13 @@ class redis (
   $dir_recurse         = true,
 
   $dependency_class    = undef,
-  $monitor_class       = 'redis::monitor',
-  $firewall_class      = 'redis::firewall',
   $my_class            = undef,
 
-  $monitor             = false,
-  $monitor_host        = $::ipaddress,
-  $monitor_port        = 22,
-  $monitor_protocol    = tcp,
-  $monitor_tool        = '',
+  $monitor_class       = 'redis::monitor',
+  $monitor_options_hash = { } ,
 
-  $firewall            = false,
-  $firewall_src        = '0/0',
-  $firewall_dst        = '0/0',
-  $firewall_port       = 22,
-  $firewall_protocol   = tcp
+  $firewall_class      = 'redis::firewall',
+  $firewall_options_hash = { } ,
 
   ) inherits redis::params {
 
@@ -141,11 +133,11 @@ class redis (
     include $redis::dependency_class
   }
 
-  if $redis::monitor and $redis::monitor_class {
+  if $redis::monitor_class {
     include $redis::monitor_class
   }
 
-  if $redis::firewall and $redis::firewall_class {
+  if $redis::firewall_class {
     include $redis::firewall_class
   }
 
